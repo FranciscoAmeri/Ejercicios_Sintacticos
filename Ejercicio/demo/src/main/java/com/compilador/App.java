@@ -5,9 +5,7 @@ import org.antlr.v4.runtime.tree.*;
 import org.antlr.v4.runtime.misc.ParseCancellationException;
 import org.antlr.v4.gui.TreeViewer;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
+import javax.swing.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,10 +23,10 @@ public class App {
             System.out.println("Analizando archivo: " + args[0]);
             
             CharStream inputLexico = CharStreams.fromFileName(args[0]);
-realizarAnalisisLexico(inputLexico);
+            realizarAnalisisLexico(inputLexico);
 
-CharStream inputSintactico = CharStreams.fromFileName(args[0]);
-realizarAnalisisSintactico(inputSintactico);
+            CharStream inputSintactico = CharStreams.fromFileName(args[0]);
+            realizarAnalisisSintactico(inputSintactico);
             
         } catch (IOException e) {
             System.err.println("❌ Error al leer el archivo: " + e.getMessage());
@@ -79,27 +77,6 @@ realizarAnalisisSintactico(inputSintactico);
             
         } catch (ParseCancellationException e) {
             System.out.println("\n❌ " + e.getMessage());
-            
-            // Mostrar contexto del error (opcional)
-            String[] lineas = input.toString().split("\n");
-            if (e.getMessage().contains("línea")) {
-                try {
-                    int lineaError = Integer.parseInt(e.getMessage().split("línea ")[1].split(":")[0]);
-                    int lineaInicio = Math.max(0, lineaError - 2);
-                    int lineaFin = Math.min(lineas.length, lineaError + 1);
-                    
-                    System.out.println("\nContexto del error:");
-                    for (int i = lineaInicio; i < lineaFin; i++) {
-                        if (i + 1 == lineaError) {
-                            System.out.println("→ " + (i + 1) + ": " + lineas[i]);
-                        } else {
-                            System.out.println("  " + (i + 1) + ": " + lineas[i]);
-                        }
-                    }
-                } catch (Exception ex) {
-                    // Si hay algún problema mostrando el contexto, simplemente lo omitimos
-                }
-            }
         }
     }
     
@@ -122,11 +99,11 @@ realizarAnalisisSintactico(inputSintactico);
         });
         
         try {
-            System.out.println("\n=== ANÁLISIS SINTÁCTICO DE EXPRESIONES ===");
-            System.out.println("Intentando analizar el archivo como expresión aritmética...");
-            
-            // Intentar analizar como expresión
-            ParseTree tree = parser.expr();
+            System.out.println("\n=== ANÁLISIS SINTÁCTICO ===");
+            System.out.println("Intentando analizar el archivo como programa...");
+
+            // Intentar analizar como un programa general
+            ParseTree tree = parser.programa(); // Asegúrate de que "programa" sea la regla en tu gramática
             
             System.out.println("\n✅ Análisis sintáctico completado sin errores.");
             System.out.println("Representación textual del árbol sintáctico:");
@@ -137,152 +114,95 @@ realizarAnalisisSintactico(inputSintactico);
             ExprVisitor visitor = new ExprVisitor();
             visitor.visit(tree);
             
-            // Mostrar árbol gráficamente
-            mostrarArbolGrafico(tree, parser);
-            
+            // Generar imagen del árbol sintáctico
+            generarImagenArbolSintactico(tree, parser);
+
         } catch (ParseCancellationException e) {
             System.out.println("\n❌ " + e.getMessage());
-            System.out.println("El archivo no pudo ser analizado como una expresión aritmética válida.");
-            
-            // Intento alternativo: analizar como programa general
-            try {
-                // Resetear el parser
-                tokens.seek(0);
-                parser.reset();
-                
-                System.out.println("\nIntentando analizar como programa general...");
-                ParseTree tree = parser.programa();
-                
-                System.out.println("✅ Análisis como programa general completado sin errores.");
-                
-            } catch (Exception ex) {
-                System.out.println("❌ ERROR: El archivo no cumple con la gramática definida.");
-            }
+            System.out.println("El archivo no pudo ser analizado como programa válido.");
         }
     }
     
-    private static void mostrarArbolGrafico(ParseTree tree, MiLenguajeParser parser) {
-        // Crear una ventana para mostrar el árbol
-        JFrame frame = new JFrame("Árbol Sintáctico - Expresión Aritmética");
-        JPanel panel = new JPanel();
-        
-        // Crear visualizador de árbol
-        TreeViewer viewer = new TreeViewer(Arrays.asList(
-                parser.getRuleNames()), tree);
-        viewer.setScale(1.5); // Escalar para mejor visualización
-        
-        panel.add(viewer);
-        
-        // Añadir scroll para árboles grandes
-        JScrollPane scrollPane = new JScrollPane(panel);
-        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-        
-        frame.add(scrollPane);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(800, 600);
-        frame.setVisible(true);
+    private static void generarImagenArbolSintactico(ParseTree tree, MiLenguajeParser parser) {
+        // Usar ANTLR para generar una imagen del árbol
+        try {
+            // Mostrar el árbol en una ventana gráfica
+            JFrame frame = new JFrame("Árbol Sintáctico");
+            JPanel panel = new JPanel();
+            
+            TreeViewer viewer = new TreeViewer(Arrays.asList(parser.getRuleNames()), tree);
+            viewer.setScale(1.5); // Escala para mejor visualización
+            panel.add(viewer);
+            
+            JScrollPane scrollPane = new JScrollPane(panel);
+            scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+            scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+            
+            frame.add(scrollPane);
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.setSize(800, 600);
+            frame.setVisible(true);
+            
+        } catch (Exception e) {
+            System.out.println("❌ Error al generar la imagen del árbol: " + e.getMessage());
+        }
     }
 }
 
 // Visitor para imprimir la estructura de la expresión
 class ExprVisitor extends MiLenguajeBaseVisitor<Void> {
     private int indentLevel = 0;
-    
+
     private void indent() {
         for (int i = 0; i < indentLevel; i++) {
             System.out.print("  ");
         }
     }
-    
+
     @Override
-    public Void visitAddition(MiLenguajeParser.AdditionContext ctx) {
+    public Void visitPrograma(MiLenguajeParser.ProgramaContext ctx) {
         indent();
-        System.out.println("Adición:");
+        System.out.println("Programa:");
+        return visit(ctx.a());  // Visitamos la regla 'a'
+    }
+
+    @Override
+    public Void visitConParentesis(MiLenguajeParser.ConParentesisContext ctx) {
+        indent();
+        System.out.println("Con paréntesis:");
         indentLevel++;
-        
-        indent();
-        System.out.println("Lado izquierdo:");
-        indentLevel++;
-        visit(ctx.expr());
-        indentLevel--;
-        
-        indent();
-        System.out.println("Operador: +");
-        
-        indent();
-        System.out.println("Lado derecho:");
-        indentLevel++;
-        visit(ctx.term());
-        indentLevel--;
-        
+        visit(ctx.b()); // Visitamos 'b' dentro de 'a'
         indentLevel--;
         return null;
     }
-    
+
     @Override
-    public Void visitMultiplication(MiLenguajeParser.MultiplicationContext ctx) {
+    public Void visitVacioA(MiLenguajeParser.VacioAContext ctx) {
         indent();
-        System.out.println("Multiplicación:");
-        indentLevel++;
-        
-        indent();
-        System.out.println("Lado izquierdo:");
-        indentLevel++;
-        visit(ctx.term());
-        indentLevel--;
-        
-        indent();
-        System.out.println("Operador: *");
-        
-        indent();
-        System.out.println("Lado derecho:");
-        indentLevel++;
-        visit(ctx.factor());
-        indentLevel--;
-        
-        indentLevel--;
+        System.out.println("Vacio A");
         return null;
     }
-    
+
     @Override
-    public Void visitJustTerm(MiLenguajeParser.JustTermContext ctx) {
-        return visit(ctx.term());
-    }
-    
-    @Override
-    public Void visitJustFactor(MiLenguajeParser.JustFactorContext ctx) {
-        return visit(ctx.factor());
-    }
-    
-    @Override
-    public Void visitParentheses(MiLenguajeParser.ParenthesesContext ctx) {
+    public Void visitPrimerHexa(MiLenguajeParser.PrimerHexaContext ctx) {
         indent();
-        System.out.println("Expresión entre paréntesis:");
-        indentLevel++;
-        visit(ctx.expr());
-        indentLevel--;
+        System.out.println("Primer Hexadecimal: " + ctx.HEXA().getText());
+        visit(ctx.c());  // Visitamos 'c' después de 'b'
         return null;
     }
-    
+
     @Override
-    public Void visitNumber(MiLenguajeParser.NumberContext ctx) {
+    public Void visitHexaRecursiva(MiLenguajeParser.HexaRecursivaContext ctx) {
         indent();
-        System.out.println("Número entero: " + ctx.INTEGER().getText());
+        System.out.println("Hexadecimal Recursivo: " + ctx.HEXA().getText());
+        visit(ctx.c());  // Recursión de 'c'
         return null;
     }
-    
+
     @Override
-    public Void visitDecimalNumber(MiLenguajeParser.DecimalNumberContext ctx) {
+    public Void visitVacioC(MiLenguajeParser.VacioCContext ctx) {
         indent();
-        System.out.println("Número decimal: " + ctx.DECIMAL().getText());
-        return null;
-    }
-    
-    @Override
-    public Void visitIdentifier(MiLenguajeParser.IdentifierContext ctx) {
-        indent();
-        System.out.println("Identificador: " + ctx.ID().getText());
+        System.out.println("Vacio C");
         return null;
     }
 }

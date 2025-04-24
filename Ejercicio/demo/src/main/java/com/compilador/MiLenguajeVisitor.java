@@ -17,65 +17,38 @@ public interface MiLenguajeVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitPrograma(MiLenguajeParser.ProgramaContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code Addition}
-	 * labeled alternative in {@link MiLenguajeParser#expr}.
+	 * Visit a parse tree produced by the {@code ConParentesis}
+	 * labeled alternative in {@link MiLenguajeParser#a}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitAddition(MiLenguajeParser.AdditionContext ctx);
+	T visitConParentesis(MiLenguajeParser.ConParentesisContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code JustTerm}
-	 * labeled alternative in {@link MiLenguajeParser#expr}.
+	 * Visit a parse tree produced by the {@code VacioA}
+	 * labeled alternative in {@link MiLenguajeParser#a}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitJustTerm(MiLenguajeParser.JustTermContext ctx);
+	T visitVacioA(MiLenguajeParser.VacioAContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code Multiplication}
-	 * labeled alternative in {@link MiLenguajeParser#term}.
+	 * Visit a parse tree produced by the {@code PrimerHexa}
+	 * labeled alternative in {@link MiLenguajeParser#b}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitMultiplication(MiLenguajeParser.MultiplicationContext ctx);
+	T visitPrimerHexa(MiLenguajeParser.PrimerHexaContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code JustFactor}
-	 * labeled alternative in {@link MiLenguajeParser#term}.
+	 * Visit a parse tree produced by the {@code HexaRecursiva}
+	 * labeled alternative in {@link MiLenguajeParser#c}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitJustFactor(MiLenguajeParser.JustFactorContext ctx);
+	T visitHexaRecursiva(MiLenguajeParser.HexaRecursivaContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code Parentheses}
-	 * labeled alternative in {@link MiLenguajeParser#factor}.
+	 * Visit a parse tree produced by the {@code VacioC}
+	 * labeled alternative in {@link MiLenguajeParser#c}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitParentheses(MiLenguajeParser.ParenthesesContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code Number}
-	 * labeled alternative in {@link MiLenguajeParser#factor}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitNumber(MiLenguajeParser.NumberContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code DecimalNumber}
-	 * labeled alternative in {@link MiLenguajeParser#factor}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitDecimalNumber(MiLenguajeParser.DecimalNumberContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code Identifier}
-	 * labeled alternative in {@link MiLenguajeParser#factor}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitIdentifier(MiLenguajeParser.IdentifierContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link MiLenguajeParser#token}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitToken(MiLenguajeParser.TokenContext ctx);
+	T visitVacioC(MiLenguajeParser.VacioCContext ctx);
 }
