@@ -20,7 +20,7 @@
         <!-- ANTLR Runtime para análisis léxico y sintáctico -->
         <dependency>
             <groupId>org.antlr</groupId>
-            <artifactId>antlr4-runtime</artifactId>
+            <artifactId>antlr4</artifactId>
             <version>${antlr.version}</version>
         </dependency>
         
