@@ -182,6 +182,21 @@ public class MiLenguajeParser extends Parser {
 			else return visitor.visitChildren(this);
 		}
 	}
+	public static class SubtractionContext extends ExprContext {
+		public ExprContext expr() {
+			return getRuleContext(ExprContext.class,0);
+		}
+		public TerminalNode RES() { return getToken(MiLenguajeParser.RES, 0); }
+		public TermContext term() {
+			return getRuleContext(TermContext.class,0);
+		}
+		public SubtractionContext(ExprContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MiLenguajeVisitor ) return ((MiLenguajeVisitor<? extends T>)visitor).visitSubtraction(this);
+			else return visitor.visitChildren(this);
+		}
+	}
 	public static class JustTermContext extends ExprContext {
 		public TermContext term() {
 			return getRuleContext(TermContext.class,0);
@@ -218,29 +233,47 @@ public class MiLenguajeParser extends Parser {
 			term(0);
 			}
 			_ctx.stop = _input.LT(-1);
-			setState(26);
+			setState(29);
 			_errHandler.sync(this);
-			_alt = getInterpreter().adaptivePredict(_input,1,_ctx);
+			_alt = getInterpreter().adaptivePredict(_input,2,_ctx);
 			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					if ( _parseListeners!=null ) triggerExitRuleEvent();
 					_prevctx = _localctx;
 					{
-					{
-					_localctx = new AdditionContext(new ExprContext(_parentctx, _parentState));
-					pushNewRecursionContext(_localctx, _startState, RULE_expr);
-					setState(21);
-					if (!(precpred(_ctx, 2))) throw new FailedPredicateException(this, "precpred(_ctx, 2)");
-					setState(22);
-					match(SUM);
-					setState(23);
-					term(0);
+					setState(27);
+					_errHandler.sync(this);
+					switch ( getInterpreter().adaptivePredict(_input,1,_ctx) ) {
+					case 1:
+						{
+						_localctx = new AdditionContext(new ExprContext(_parentctx, _parentState));
+						pushNewRecursionContext(_localctx, _startState, RULE_expr);
+						setState(21);
+						if (!(precpred(_ctx, 3))) throw new FailedPredicateException(this, "precpred(_ctx, 3)");
+						setState(22);
+						match(SUM);
+						setState(23);
+						term(0);
+						}
+						break;
+					case 2:
+						{
+						_localctx = new SubtractionContext(new ExprContext(_parentctx, _parentState));
+						pushNewRecursionContext(_localctx, _startState, RULE_expr);
+						setState(24);
+						if (!(precpred(_ctx, 2))) throw new FailedPredicateException(this, "precpred(_ctx, 2)");
+						setState(25);
+						match(RES);
+						setState(26);
+						term(0);
+						}
+						break;
 					}
 					} 
 				}
-				setState(28);
+				setState(31);
 				_errHandler.sync(this);
-				_alt = getInterpreter().adaptivePredict(_input,1,_ctx);
+				_alt = getInterpreter().adaptivePredict(_input,2,_ctx);
 			}
 			}
 		}
@@ -281,6 +314,21 @@ public class MiLenguajeParser extends Parser {
 			else return visitor.visitChildren(this);
 		}
 	}
+	public static class DivisionContext extends TermContext {
+		public TermContext term() {
+			return getRuleContext(TermContext.class,0);
+		}
+		public TerminalNode DIV() { return getToken(MiLenguajeParser.DIV, 0); }
+		public FactorContext factor() {
+			return getRuleContext(FactorContext.class,0);
+		}
+		public DivisionContext(TermContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MiLenguajeVisitor ) return ((MiLenguajeVisitor<? extends T>)visitor).visitDivision(this);
+			else return visitor.visitChildren(this);
+		}
+	}
 	public static class JustFactorContext extends TermContext {
 		public FactorContext factor() {
 			return getRuleContext(FactorContext.class,0);
@@ -313,33 +361,51 @@ public class MiLenguajeParser extends Parser {
 			_ctx = _localctx;
 			_prevctx = _localctx;
 
-			setState(30);
+			setState(33);
 			factor();
 			}
 			_ctx.stop = _input.LT(-1);
-			setState(37);
+			setState(43);
 			_errHandler.sync(this);
-			_alt = getInterpreter().adaptivePredict(_input,2,_ctx);
+			_alt = getInterpreter().adaptivePredict(_input,4,_ctx);
 			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					if ( _parseListeners!=null ) triggerExitRuleEvent();
 					_prevctx = _localctx;
 					{
-					{
-					_localctx = new MultiplicationContext(new TermContext(_parentctx, _parentState));
-					pushNewRecursionContext(_localctx, _startState, RULE_term);
-					setState(32);
-					if (!(precpred(_ctx, 2))) throw new FailedPredicateException(this, "precpred(_ctx, 2)");
-					setState(33);
-					match(MUL);
-					setState(34);
-					factor();
+					setState(41);
+					_errHandler.sync(this);
+					switch ( getInterpreter().adaptivePredict(_input,3,_ctx) ) {
+					case 1:
+						{
+						_localctx = new MultiplicationContext(new TermContext(_parentctx, _parentState));
+						pushNewRecursionContext(_localctx, _startState, RULE_term);
+						setState(35);
+						if (!(precpred(_ctx, 3))) throw new FailedPredicateException(this, "precpred(_ctx, 3)");
+						setState(36);
+						match(MUL);
+						setState(37);
+						factor();
+						}
+						break;
+					case 2:
+						{
+						_localctx = new DivisionContext(new TermContext(_parentctx, _parentState));
+						pushNewRecursionContext(_localctx, _startState, RULE_term);
+						setState(38);
+						if (!(precpred(_ctx, 2))) throw new FailedPredicateException(this, "precpred(_ctx, 2)");
+						setState(39);
+						match(DIV);
+						setState(40);
+						factor();
+						}
+						break;
 					}
 					} 
 				}
-				setState(39);
+				setState(45);
 				_errHandler.sync(this);
-				_alt = getInterpreter().adaptivePredict(_input,2,_ctx);
+				_alt = getInterpreter().adaptivePredict(_input,4,_ctx);
 			}
 			}
 		}
@@ -365,15 +431,6 @@ public class MiLenguajeParser extends Parser {
 			super.copyFrom(ctx);
 		}
 	}
-	public static class DecimalNumberContext extends FactorContext {
-		public TerminalNode DECIMAL() { return getToken(MiLenguajeParser.DECIMAL, 0); }
-		public DecimalNumberContext(FactorContext ctx) { copyFrom(ctx); }
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof MiLenguajeVisitor ) return ((MiLenguajeVisitor<? extends T>)visitor).visitDecimalNumber(this);
-			else return visitor.visitChildren(this);
-		}
-	}
 	public static class IdentifierContext extends FactorContext {
 		public TerminalNode ID() { return getToken(MiLenguajeParser.ID, 0); }
 		public IdentifierContext(FactorContext ctx) { copyFrom(ctx); }
@@ -383,74 +440,16 @@ public class MiLenguajeParser extends Parser {
 			else return visitor.visitChildren(this);
 		}
 	}
-	public static class NumberContext extends FactorContext {
-		public TerminalNode INTEGER() { return getToken(MiLenguajeParser.INTEGER, 0); }
-		public NumberContext(FactorContext ctx) { copyFrom(ctx); }
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof MiLenguajeVisitor ) return ((MiLenguajeVisitor<? extends T>)visitor).visitNumber(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-	public static class ParenthesesContext extends FactorContext {
-		public TerminalNode PA() { return getToken(MiLenguajeParser.PA, 0); }
-		public ExprContext expr() {
-			return getRuleContext(ExprContext.class,0);
-		}
-		public TerminalNode PC() { return getToken(MiLenguajeParser.PC, 0); }
-		public ParenthesesContext(FactorContext ctx) { copyFrom(ctx); }
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof MiLenguajeVisitor ) return ((MiLenguajeVisitor<? extends T>)visitor).visitParentheses(this);
-			else return visitor.visitChildren(this);
-		}
-	}
 
 	public final FactorContext factor() throws RecognitionException {
 		FactorContext _localctx = new FactorContext(_ctx, getState());
 		enterRule(_localctx, 6, RULE_factor);
 		try {
-			setState(47);
-			_errHandler.sync(this);
-			switch (_input.LA(1)) {
-			case PA:
-				_localctx = new ParenthesesContext(_localctx);
-				enterOuterAlt(_localctx, 1);
-				{
-				setState(40);
-				match(PA);
-				setState(41);
-				expr(0);
-				setState(42);
-				match(PC);
-				}
-				break;
-			case INTEGER:
-				_localctx = new NumberContext(_localctx);
-				enterOuterAlt(_localctx, 2);
-				{
-				setState(44);
-				match(INTEGER);
-				}
-				break;
-			case DECIMAL:
-				_localctx = new DecimalNumberContext(_localctx);
-				enterOuterAlt(_localctx, 3);
-				{
-				setState(45);
-				match(DECIMAL);
-				}
-				break;
-			case ID:
-				_localctx = new IdentifierContext(_localctx);
-				enterOuterAlt(_localctx, 4);
-				{
-				setState(46);
-				match(ID);
-				}
-				break;
-			default:
-				throw new NoViableAltException(this);
+			_localctx = new IdentifierContext(_localctx);
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(46);
+			match(ID);
 			}
 		}
 		catch (RecognitionException re) {
@@ -520,7 +519,7 @@ public class MiLenguajeParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(49);
+			setState(48);
 			_la = _input.LA(1);
 			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << PA) | (1L << PC) | (1L << CA) | (1L << CC) | (1L << LA) | (1L << LC) | (1L << PYC) | (1L << COMA) | (1L << IGUAL) | (1L << MAYOR) | (1L << MAYOR_IGUAL) | (1L << MENOR) | (1L << MENOR_IGUAL) | (1L << EQL) | (1L << DISTINTO) | (1L << SUM) | (1L << RES) | (1L << MUL) | (1L << DIV) | (1L << MOD) | (1L << OR) | (1L << AND) | (1L << NOT) | (1L << FOR) | (1L << WHILE) | (1L << IF) | (1L << ELSE) | (1L << INT) | (1L << CHAR) | (1L << DOUBLE) | (1L << VOID) | (1L << RETURN) | (1L << ID) | (1L << INTEGER) | (1L << DECIMAL) | (1L << CHARACTER) | (1L << OTRO))) != 0)) ) {
 			_errHandler.recoverInline(this);
@@ -555,34 +554,37 @@ public class MiLenguajeParser extends Parser {
 	private boolean expr_sempred(ExprContext _localctx, int predIndex) {
 		switch (predIndex) {
 		case 0:
+			return precpred(_ctx, 3);
+		case 1:
 			return precpred(_ctx, 2);
 		}
 		return true;
 	}
 	private boolean term_sempred(TermContext _localctx, int predIndex) {
 		switch (predIndex) {
-		case 1:
+		case 2:
+			return precpred(_ctx, 3);
+		case 3:
 			return precpred(_ctx, 2);
 		}
 		return true;
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3*\66\4\2\t\2\4\3\t"+
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3*\65\4\2\t\2\4\3\t"+
 		"\3\4\4\t\4\4\5\t\5\4\6\t\6\3\2\7\2\16\n\2\f\2\16\2\21\13\2\3\2\3\2\3\3"+
-		"\3\3\3\3\3\3\3\3\3\3\7\3\33\n\3\f\3\16\3\36\13\3\3\4\3\4\3\4\3\4\3\4\3"+
-		"\4\7\4&\n\4\f\4\16\4)\13\4\3\5\3\5\3\5\3\5\3\5\3\5\3\5\5\5\62\n\5\3\6"+
-		"\3\6\3\6\2\4\4\6\7\2\4\6\b\n\2\3\4\2\3&**\2\66\2\17\3\2\2\2\4\24\3\2\2"+
-		"\2\6\37\3\2\2\2\b\61\3\2\2\2\n\63\3\2\2\2\f\16\5\n\6\2\r\f\3\2\2\2\16"+
-		"\21\3\2\2\2\17\r\3\2\2\2\17\20\3\2\2\2\20\22\3\2\2\2\21\17\3\2\2\2\22"+
-		"\23\7\2\2\3\23\3\3\2\2\2\24\25\b\3\1\2\25\26\5\6\4\2\26\34\3\2\2\2\27"+
-		"\30\f\4\2\2\30\31\7\22\2\2\31\33\5\6\4\2\32\27\3\2\2\2\33\36\3\2\2\2\34"+
-		"\32\3\2\2\2\34\35\3\2\2\2\35\5\3\2\2\2\36\34\3\2\2\2\37 \b\4\1\2 !\5\b"+
-		"\5\2!\'\3\2\2\2\"#\f\4\2\2#$\7\24\2\2$&\5\b\5\2%\"\3\2\2\2&)\3\2\2\2\'"+
-		"%\3\2\2\2\'(\3\2\2\2(\7\3\2\2\2)\'\3\2\2\2*+\7\3\2\2+,\5\4\3\2,-\7\4\2"+
-		"\2-\62\3\2\2\2.\62\7$\2\2/\62\7%\2\2\60\62\7#\2\2\61*\3\2\2\2\61.\3\2"+
-		"\2\2\61/\3\2\2\2\61\60\3\2\2\2\62\t\3\2\2\2\63\64\t\2\2\2\64\13\3\2\2"+
-		"\2\6\17\34\'\61";
+		"\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\7\3\36\n\3\f\3\16\3!\13\3\3\4\3\4\3\4"+
+		"\3\4\3\4\3\4\3\4\3\4\3\4\7\4,\n\4\f\4\16\4/\13\4\3\5\3\5\3\6\3\6\3\6\2"+
+		"\4\4\6\7\2\4\6\b\n\2\3\4\2\3&**\2\64\2\17\3\2\2\2\4\24\3\2\2\2\6\"\3\2"+
+		"\2\2\b\60\3\2\2\2\n\62\3\2\2\2\f\16\5\n\6\2\r\f\3\2\2\2\16\21\3\2\2\2"+
+		"\17\r\3\2\2\2\17\20\3\2\2\2\20\22\3\2\2\2\21\17\3\2\2\2\22\23\7\2\2\3"+
+		"\23\3\3\2\2\2\24\25\b\3\1\2\25\26\5\6\4\2\26\37\3\2\2\2\27\30\f\5\2\2"+
+		"\30\31\7\22\2\2\31\36\5\6\4\2\32\33\f\4\2\2\33\34\7\23\2\2\34\36\5\6\4"+
+		"\2\35\27\3\2\2\2\35\32\3\2\2\2\36!\3\2\2\2\37\35\3\2\2\2\37 \3\2\2\2 "+
+		"\5\3\2\2\2!\37\3\2\2\2\"#\b\4\1\2#$\5\b\5\2$-\3\2\2\2%&\f\5\2\2&\'\7\24"+
+		"\2\2\',\5\b\5\2()\f\4\2\2)*\7\25\2\2*,\5\b\5\2+%\3\2\2\2+(\3\2\2\2,/\3"+
+		"\2\2\2-+\3\2\2\2-.\3\2\2\2.\7\3\2\2\2/-\3\2\2\2\60\61\7#\2\2\61\t\3\2"+
+		"\2\2\62\63\t\2\2\2\63\13\3\2\2\2\7\17\35\37+-";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

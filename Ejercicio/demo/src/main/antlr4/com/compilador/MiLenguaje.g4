@@ -4,17 +4,24 @@ grammar MiLenguaje;
 programa : (token)* EOF ;
 
 // Reglas para análisis ascendente de expresiones
+// E → E + T 
+//   | E - T 
+//   | T
 expr : expr SUM term     # Addition
+     | expr RES term     # Subtraction
      | term              # JustTerm
      ;
+
+// T → T * F 
+//    | T / F 
+//    | F
 term : term MUL factor   # Multiplication
-     | factor           # JustFactor
+     | term DIV factor   # Division
+     | factor            # JustFactor
      ;
 
-factor : PA expr PC      # Parentheses
-       | INTEGER        # Number
-       | DECIMAL        # DecimalNumber
-       | ID             # Identifier
+// F → id
+factor : ID              # Identifier
        ;
 
 token : PA | PC | CA | CC | LA | LC | PYC | COMA | IGUAL | MAYOR | MAYOR_IGUAL 

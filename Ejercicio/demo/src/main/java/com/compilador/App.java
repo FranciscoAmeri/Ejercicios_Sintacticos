@@ -200,47 +200,97 @@ class ExprVisitor extends MiLenguajeBaseVisitor<Void> {
         indent();
         System.out.println("Adición:");
         indentLevel++;
-        
+
         indent();
         System.out.println("Lado izquierdo:");
         indentLevel++;
         visit(ctx.expr());
         indentLevel--;
-        
+
         indent();
         System.out.println("Operador: +");
-        
+
         indent();
         System.out.println("Lado derecho:");
         indentLevel++;
         visit(ctx.term());
         indentLevel--;
-        
+
         indentLevel--;
         return null;
     }
-    
+
+    @Override
+    public Void visitSubtraction(MiLenguajeParser.SubtractionContext ctx) {
+        indent();
+        System.out.println("Sustracción:");
+        indentLevel++;
+
+        indent();
+        System.out.println("Lado izquierdo:");
+        indentLevel++;
+        visit(ctx.expr());
+        indentLevel--;
+
+        indent();
+        System.out.println("Operador: -");
+
+        indent();
+        System.out.println("Lado derecho:");
+        indentLevel++;
+        visit(ctx.term());
+        indentLevel--;
+
+        indentLevel--;
+        return null;
+    }
+
     @Override
     public Void visitMultiplication(MiLenguajeParser.MultiplicationContext ctx) {
         indent();
         System.out.println("Multiplicación:");
         indentLevel++;
-        
+
         indent();
         System.out.println("Lado izquierdo:");
         indentLevel++;
         visit(ctx.term());
         indentLevel--;
-        
+
         indent();
         System.out.println("Operador: *");
-        
+
         indent();
         System.out.println("Lado derecho:");
         indentLevel++;
         visit(ctx.factor());
         indentLevel--;
-        
+
+        indentLevel--;
+        return null;
+    }
+
+    @Override
+    public Void visitDivision(MiLenguajeParser.DivisionContext ctx) {
+        indent();
+        System.out.println("División:");
+        indentLevel++;
+
+        indent();
+        System.out.println("Lado izquierdo:");
+        indentLevel++;
+        visit(ctx.term());
+        indentLevel--;
+
+        indent();
+        System.out.println("Operador: /");
+
+        indent();
+        System.out.println("Lado derecho:");
+        indentLevel++;
+        visit(ctx.factor());
+        indentLevel--;
+
         indentLevel--;
         return null;
     }
@@ -255,29 +305,6 @@ class ExprVisitor extends MiLenguajeBaseVisitor<Void> {
         return visit(ctx.factor());
     }
     
-    @Override
-    public Void visitParentheses(MiLenguajeParser.ParenthesesContext ctx) {
-        indent();
-        System.out.println("Expresión entre paréntesis:");
-        indentLevel++;
-        visit(ctx.expr());
-        indentLevel--;
-        return null;
-    }
-    
-    @Override
-    public Void visitNumber(MiLenguajeParser.NumberContext ctx) {
-        indent();
-        System.out.println("Número entero: " + ctx.INTEGER().getText());
-        return null;
-    }
-    
-    @Override
-    public Void visitDecimalNumber(MiLenguajeParser.DecimalNumberContext ctx) {
-        indent();
-        System.out.println("Número decimal: " + ctx.DECIMAL().getText());
-        return null;
-    }
     
     @Override
     public Void visitIdentifier(MiLenguajeParser.IdentifierContext ctx) {

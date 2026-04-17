@@ -24,6 +24,13 @@ public interface MiLenguajeVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitAddition(MiLenguajeParser.AdditionContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code Subtraction}
+	 * labeled alternative in {@link MiLenguajeParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSubtraction(MiLenguajeParser.SubtractionContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code JustTerm}
 	 * labeled alternative in {@link MiLenguajeParser#expr}.
 	 * @param ctx the parse tree
@@ -38,33 +45,19 @@ public interface MiLenguajeVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitMultiplication(MiLenguajeParser.MultiplicationContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code Division}
+	 * labeled alternative in {@link MiLenguajeParser#term}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitDivision(MiLenguajeParser.DivisionContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code JustFactor}
 	 * labeled alternative in {@link MiLenguajeParser#term}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitJustFactor(MiLenguajeParser.JustFactorContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code Parentheses}
-	 * labeled alternative in {@link MiLenguajeParser#factor}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitParentheses(MiLenguajeParser.ParenthesesContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code Number}
-	 * labeled alternative in {@link MiLenguajeParser#factor}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitNumber(MiLenguajeParser.NumberContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code DecimalNumber}
-	 * labeled alternative in {@link MiLenguajeParser#factor}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitDecimalNumber(MiLenguajeParser.DecimalNumberContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code Identifier}
 	 * labeled alternative in {@link MiLenguajeParser#factor}.
